@@ -9,6 +9,9 @@ public class Main {
         // Create Scanner object for input
         Scanner scnnr = new Scanner(System.in);
 
+        // Create EXIT boolean
+        boolean exit = false;
+
         // INTRO
         String intro = "This is a complexer calculator.";
         System.out.println(intro);
@@ -25,55 +28,66 @@ public class Main {
         }
         System.out.println("  ");
 
-        // GET FIRST NUMBER
-        System.out.print("Enter the first number: ");
-        double firstNum = getDoubleInput();
+        while(!exit)
+        {
 
-        // GET OPERATOR
-        System.out.print("Enter the operator that you would like to use ( +  ,  -  ,  *  ,  or   /  ): ");
-        String operator = "";
-        boolean tryAgain = false;
-        do {
-            try {
-                operator = scnnr.nextLine();
-                if ( ! (operator.equals("+") ||
-                        operator.equals("-") ||
-                        operator.equals("*") ||
-                        operator.equals("/")
-                        )) {
-                    throw new Exception();
-                } else {
-                    tryAgain = false;
+            // GET FIRST NUMBER
+            System.out.print("Enter the first number: ");
+            double firstNum = getDoubleInput();
+
+            // GET OPERATOR
+            System.out.print("Enter the operator that you would like to use ( +  ,  -  ,  *  ,  or   /  ): ");
+            String operator = "";
+            boolean tryAgain = false;
+            do {
+                try {
+                    operator = scnnr.nextLine();
+                    if ( ! (operator.equals("+") ||
+                            operator.equals("-") ||
+                            operator.equals("*") ||
+                            operator.equals("/")
+                    )) {
+                        throw new Exception();
+                    } else {
+                        tryAgain = false;
+                    }
+                } catch (Exception e) {
+                    System.out.print("You have not inputted a correct operator. Try again: ");
+                    tryAgain = true;
                 }
-            } catch (Exception e) {
-                System.out.print("You have not inputted a correct operator. Try again: ");
-                tryAgain = true;
+            } while (tryAgain);
+
+            // GET SECOND NUMBER
+            System.out.print("Enter the second number: ");
+            double secondNum = getDoubleInput();
+
+            // CALCULATE RESULT
+            double result = 0;
+            switch(operator) {
+                case("+"):
+                    result = firstNum + secondNum;
+                    break;
+                case("-"):
+                    result = firstNum - secondNum;
+                    break;
+                case("*"):
+                    result = firstNum * secondNum;
+                    break;
+                case("/"):
+                    result = firstNum / secondNum;
+                    break;
             }
-        } while (tryAgain);
 
-        // GET SECOND NUMBER
-        System.out.print("Enter the second number: ");
-        double secondNum = getDoubleInput();
+            // DISPLAY RESULT
+            System.out.println("\nThe result is " + result);
 
-        // CALCULATE RESULT
-        double result = 0;
-        switch(operator) {
-            case("+"):
-                result = firstNum + secondNum;
-                break;
-            case("-"):
-                result = firstNum - secondNum;
-                break;
-            case("*"):
-                result = firstNum * secondNum;
-                break;
-            case("/"):
-                result = firstNum / secondNum;
-                break;
+            // GO AGAIN
+            System.out.print("Input any key[s] to do another calculation, or input 'Exit' to exit: ");
+            String exitOrNo = scnnr.nextLine();
+            if (exitOrNo.equals("Exit")) {
+                exit = true; }
+
         }
-
-        // DISPLAY RESULT
-        System.out.println("\nThe result is " + result);
     }
 
     static double getDoubleInput()
